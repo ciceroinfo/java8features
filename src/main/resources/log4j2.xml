@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE Configuration>
+<Configuration status="warn">
+
+	<Properties>
+		<Property name="basePath">/tmp/</Property>
+		<Property name="APPLICATION_NAME">BSPN-PortalNegociosALog-Tema</Property>
+	</Properties>
+
+	<Appenders>
+
+		<RollingFile name="fileLogger"
+			fileName="${basePath}/${APPLICATION_NAME}.log"
+			filePattern="${basePath}/${APPLICATION_NAME}-%d{yyyy-MM-dd}.log.gz">
+			<PatternLayout
+				pattern="%-5p %d [%X{sessionId}] [%t] ${APPLICATION_NAME} %c %M %L %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+		</RollingFile>
+
+		<RollingFile name="fileAuditLogger"
+			fileName="${basePath}/${APPLICATION_NAME}.audit.log"
+			filePattern="${basePath}/${APPLICATION_NAME}-%d{yyyy-MM-dd}.audit.log.gz">
+			<PatternLayout pattern="%-5p %d [%X{sessionId}] [%t] ${APPLICATION_NAME} %c{1.} %M %L %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+		</RollingFile>
+
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%-5p %d [%X{sessionId}] [%t] ${APPLICATION_NAME} %c %M %L %m%n" />
+		</Console>
+
+	</Appenders>
+
+	<Loggers>
+		<Logger name="br.com.bradseg" level="debug" additivity="false">
+			<appender-ref ref="fileLogger" />
+			<appender-ref ref="console" />
+		</Logger>
+		<Logger name="audit" level="info" additivity="false">
+			<appender-ref ref="fileAuditLogger" />
+		</Logger>
+		<Root level="warn" additivity="false">
+			<appender-ref ref="console" />
+		</Root>
+	</Loggers>
+
+</Configuration>
