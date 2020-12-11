@@ -1,0 +1,14 @@
+# Add any directories, files, or patterns you don't want to be tracked by version control
+/.project
+target
+# IntelliJ
+*.iml
+*.iws
+*.ipr
+.idea
+*.factorypath
+*.tern-project
+*.settings
+*.project
+.classpath
+*.teste/
